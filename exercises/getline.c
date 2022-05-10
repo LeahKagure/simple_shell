@@ -4,10 +4,7 @@
 #define LSH_RL_BUFSIZE 1024
 /**
  * lsh_read_line - function that reads line from user
- * @bufsize: size of buffer
- * @position: position inside buffer
- * @buffer: pointer to buffer
- * @c: character to be read
+ * Return: Exit Success
  */
 char *lsh_read_line(void)
 {
@@ -53,9 +50,6 @@ char *lsh_read_line(void)
 
 /**
  * lsh_loop - function that loops interprating commands
- * @line:pointer to line to be read
- * @args: arguments in the line
- * @status: variable to determine when to exit
  */
 void lsh_loop(void)
 {
@@ -78,6 +72,7 @@ void lsh_loop(void)
  * main - main function to run shell
  * @argc: count of arguments
  * @argv: array of strings
+ * Return: exit success
  */
 
 int main(int argc, char **argv)
