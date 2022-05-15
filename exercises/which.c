@@ -15,7 +15,7 @@ int main(int ac, char **av, char **env)
 	unsigned int i;
 	list_t *dir_l = NULL;
 	char **dir_a = NULL;
-	
+
 	if (ac < 2)
 	{
 		printf("Usage: _which filename ...\n");
@@ -23,7 +23,7 @@ int main(int ac, char **av, char **env)
 	}
 
 	/*get PATH*/
-	for ( i = 0; env[i] != NULL; i++)
+	for (i = 0; env[i] != NULL; i++)
 	{
 		path = get_path(env[i], "PATH");
 		if (path)
@@ -40,10 +40,10 @@ int main(int ac, char **av, char **env)
 		free_list(dir_l);
 
 	/* check if filename is in directories*/
-	for ( i = 1; av [i]; i++)
+	for (i = 1; av[i]; i++)
 	{
 		full_path = get_full_path(av[i], dir_a);
-	
+
 		if (full_path)
 		{
 			printf("%s\n", full_path);
@@ -53,10 +53,10 @@ int main(int ac, char **av, char **env)
 	/* free dir_a */
 	for (i = 0; dir_a && dir_a[i]; i++)
 		free(dir_a[i]);
-	
+
 	if (dir_a)
 		free(dir_a);
-	
+
 	return (0);
 }
 
@@ -150,7 +150,7 @@ char *get_full_path(char *filename, char **dir_a)
 			free(full_path);
 		}
 	}
-	return (full_path);	
+	return (full_path);
 }
 
 /**
@@ -179,7 +179,7 @@ char *create_path(char *dir, char *filename)
 	/* copy contents of dir*/
 	for (i = 0, k = 0; i < len_d; i++, k++)
 		full_path[k] = dir[i];
-	
+
 	full_path[k++] = '/';
 
 	/* copy contents of filename*/
@@ -190,4 +190,3 @@ char *create_path(char *dir, char *filename)
 
 	return (full_path);
 }
-
