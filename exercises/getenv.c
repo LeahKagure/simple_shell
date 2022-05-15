@@ -37,6 +37,6 @@ char *get_path(char *str, const char *var)
 
 	if (_strcmp(var, strtok(str, "=")) == 0)
 		path = strtok(NULL, "\n");
-				
+
 	return (path);
 }

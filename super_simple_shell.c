@@ -36,7 +36,7 @@ char *prompt(void)
 	/*get input from user*/
 
 	if (getline(&buf, &size, stdin) == -1)
-	{	
+	{
 		free(buf);
 		perror("Error:\n ");
 		return (NULL);
@@ -82,7 +82,7 @@ static void sig_handler(int sig)
 	free(buf);
 	(void)sig;
 	write(STDOUT_FILENO, "\n", 2);
-	exit (0);
+	exit(0);
 }
 
 /**
