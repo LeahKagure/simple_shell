@@ -1,29 +1,23 @@
 #include <stdio.h>
 /**
- * main - prints all arguments without using argc
- * @argc: number of arguments in argv
- * @argv: array of strings (arguments)
+ * main - program that prints all the arguments
+ * @ac: number of items in av
+ * @av: null terminated array of strings
  *
- * Return: Always 0 (Success)
+ * Return: 0 success
  */
 
-int main(int argc, char *argv[])
+int main(int ac, char **av)
 {
-int count;
+	int i;
+	
+	if (av == NULL)
+		return (0);
 
-printf("This program was called with \"%s\".\n", argv[0]);
-
-if (argc > 1)
-{
-for (count = 1; count < argc; count++)
-{
-printf("argv[%d] = %s\n", count, argv[count]);
-}
-}
-else
-{
-printf("The command had no other arguments.\n");
-}
-
-return (0);
+	for (i = 0; av[i] != NULL ; i++)
+	{
+		printf("[%d] -> %s\n", i, av[i]);
+	
+	}
+	return (0);
 }

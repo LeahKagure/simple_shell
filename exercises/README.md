@@ -1,0 +1,1 @@
+This is a folder containing trial and error work for the simple shell.
