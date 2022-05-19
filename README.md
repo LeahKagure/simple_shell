@@ -20,6 +20,7 @@ gcc *.c -o main
 **main** can be invoked both interactively and non-interactively. If **main** is invoked with standard input not connected to a terminal, it reads and executes the commands it has recieved in\
  order.
 
+
 Example:
 ```
 $ echo "echo 'hello'" | ./main
@@ -35,6 +36,7 @@ Example:
 $./main
 $
 ```
+
 
 Alternatively, if the command line arguments are supplied upon invocation, **main** treats the first argument as a file from which to read commands. The supplied file should contain one comma\
 nd per line. **main** runs each of the commands contained in the file in order before exiting.
