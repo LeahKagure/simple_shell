@@ -94,26 +94,4 @@ int is_in_str(const char *str, char c);
 int _atoi(char *str);
 void str_rep(char *str, char c1, char c2);
 
-extern char **environ;
-
-char *_strcat(char *dest, char *src);
-int _strncmp(const char *s1, const char *s2, size_t len);
-int _atoi(char *s);
-int _putchar(char c);
-void _puts(char *str);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-int count_input(char *str);
-int count_delims(char *str, char *del);
-char *remove_new_line(char *str);
-void signal_handler(int sig_id);
-void _open_help(void);
-void _print_env(void);
-void _handle_exit(char **u_tokns, char *line);
-int execBuiltInCommands(char **u_tokns, char *line);
-void frees_get_env(char *env_path);
-void frees_tokens(char **tokns);
-int exec(char *cname, char **opts);
-char **tokenize(char *str, char *del, int len);
-char *find(char *cname);
-
 #endif
