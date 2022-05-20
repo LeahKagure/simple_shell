@@ -1,52 +1,51 @@
-C - Simple Shell
-Description
-This is a simple UNIX command interpreter written in C.
+# Simple Shell :shell:
 
-Compilation
-The shell program is compiled this way:
+This is a simple UNIX command intepreter that is part of the ALX low-level programming and algorithm curriculumn.
 
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+## Description :speech_balloon:
 
-Usage
-The shell program can run in either interactive or non-interactive mode.
+A simple UNIX command language intepreter that reads commands from a file or standard input and executes them.
 
-Interactive Mode
-$ ./hsh
-($) /bin/ls
-hsh main.c shell.c
-($)
-($) exit
+### Invocation :running:
+
+Usage: **main** [filename]
+
+To invoke its usage, compile all `.c` files in the repository and run the resulting executable:
+
+```
+gcc *.c -o main
+./main
+```
+
+**main** can be invoked both interactively and non-interactively. If **main** is invoked with standard input not connected to a terminal, it reads and executes the commands it has recieved in\
+ order.
+
+Example:
+```
+$ echo "echo 'hello'" | ./main
+'hello'
 $
-Non-Interactive Mode
-$ echo "/bin/ls" | ./hsh
-hsh main.c shell.c test_ls_2
-$
-$ cat test_ls_2
-/bin/ls
-/bin/ls
-$
-$ cat test_ls_2 | ./hsh
-hsh main.c shell.c test_ls_2
-hsh main.c shell.c test_ls_2
-$
-Included Built-Ins
-The simple shell has support for the following built-in commands:
+```
 
-Command	Definition
-exit [status]	Exits the shell with a given status
-env	Prints the current environment
-setenv [variable] [value]	Sets an environment variable to a given value
-unsetenv [variable]	Removes an environment variable
-Examples
-$ /bin/ls
-AUTHORS  README.md  built.c  env_list.c  hsh  lists.c  main.c  main.h  shell.c	strings.c
-$ ls
-AUTHORS  README.md  built.c  env_list.c  hsh  lists.c  main.c  main.h  shell.c	strings.c
-$ ^C
-$ hello world
-./hsh: 1: hello: not found
-$ exit
+If **main** is invoked with standard input connected to a terminal, an *interactive* shell is opened. When executing interactively, **main** displays the prompt `$` when it is ready to read a\
+ command.
 
-Written by:
-1. Jeffrey Maina
-2. Leah Mbuthia
+Example:
+```
+$./main
+$
+```
+
+Alternatively, if the command line arguments are supplied upon invocation, **main** treats the first argument as a file from which to read commands. The supplied file should contain one comma\
+nd per line. **main** runs each of the commands contained in the file in order before exiting.
+
+Example:
+```
+$ cat test
+echo 'hello'
+$ ./main test
+'hello'
+$
+```
+======
+readme
