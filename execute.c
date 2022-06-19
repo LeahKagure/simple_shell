@@ -1,25 +1,44 @@
-#include "shell.h"
+#include "main.h"
 
 /**
- *execute - calls the builtins to action
- *@arg: the input argument from cli prompt
- *Return: exec status(overiding main process for success)
+ * execute - executes a given input command
+ * @input_array: array of strings containing input command
+ * @command: name of command to execute
+ * @shell_name: name of shell program
+ *
+ * Return: 0 success. Otherwise negative integer
  */
-int execute(char **arg)
+int execute(char **input_array, char *command, char *shell_name)
 {
-	int i;
-	char *b_str[] = {"cd", "exit"};
+	pid_t child_pid;
+	int status;
+	char *error_message[4];
 
-	int (*b_func[])(char **) = {&c_d, &ex_it};
+	error_message_init(error_message, shell_name, command);
 
-	if (arg[0] == NULL)
-		return (1);
-	for (i = 0; i < builtins(); i++)
+	child_pid = fork();
+	if (child_pid == -1)
 	{
-		if (_strcmp(arg[0], b_str[i]) == 0)
+		error_message[2] = "fork error";
+		print_error(error_message);
+		return (-1);
+	}
+	else if (child_pid == 0) /* execute command */
+	{
+		if (execve(command, input_array, NULL) == -1)
 		{
-			return ((*b_func[i])(arg));
+			error_message[2] = "execve error";
+			print_error(error_message);
+			return (-2);
 		}
 	}
-	return (launch(arg));
+	else
+	{
+		wait(&status);
+
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
+	}
+
+	return (0);
 }
