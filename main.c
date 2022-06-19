@@ -1,49 +1,25 @@
-#include "main.h"
+#include "shell.h"
 
+/*THIS IS TASK 1 SIMPLE SHELL PROJECT*/
 /**
- * main - implements super simple shell
- *
- * @ac: number of commandline arguments
- * @av: array of commandline arguments
- * @env: array of environment variables
- *
- * Return: 0 success. 1 otherwise
+ * main - gets the prompt going
+ * Return: 0 for success
  */
-int main(int ac, char **av, char **env)
+int main(void)
 {
-	list_t *env_list = NULL;
-	int shell_return;
+	char **token;
+	char *line;
+	int status;
 
-	/* create env_list */
-	env_list = create_env(env, env_list);
-
-	/* handle SIGINT */
-	signal(SIGINT, sig_handler);
-
-	/* start shell */
-	shell_return = shell(env_list, av[0]);
-
-	/*check return value of shell */
-	if (shell_return)
+	while (status)
 	{
-		free_list(env_list);
-		exit(shell_return);
+		write(1, "$", 1);
+		line = readline();
+		token = splitline(line);
+		status = execute(token);
+		free(line);
+		free(token);
+		/*write (1, buffer, _strlen(buffer));*/
 	}
-
-	(void)ac;
-
-	free_list(env_list);
-
 	return (0);
-}
-
-/**
- * sig_handler - handles SIGINT
- * @sig: SIGINT
- */
-void sig_handler(int sig)
-{
-	signal(sig, sig_handler);
-	write(STDOUT_FILENO, "\n", 2);
-	prompt();
 }
