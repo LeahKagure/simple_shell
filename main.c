@@ -1,49 +1,73 @@
 #include "main.h"
 
 /**
- * main - implements super simple shell
+ * free_data - frees data structure
  *
- * @ac: number of commandline arguments
- * @av: array of commandline arguments
- * @env: array of environment variables
- *
- * Return: 0 success. 1 otherwise
+ * @datash: data structure
+ * Return: no return
  */
-int main(int ac, char **av, char **env)
+void free_data(data_shell *datash)
 {
-	list_t *env_list = NULL;
-	int shell_return;
+	unsigned int i;
 
-	/* create env_list */
-	env_list = create_env(env, env_list);
-
-	/* handle SIGINT */
-	signal(SIGINT, sig_handler);
-
-	/* start shell */
-	shell_return = shell(env_list, av[0]);
-
-	/*check return value of shell */
-	if (shell_return)
+	for (i = 0; datash->_environ[i]; i++)
 	{
-		free_list(env_list);
-		exit(shell_return);
+		free(datash->_environ[i]);
 	}
 
-	(void)ac;
-
-	free_list(env_list);
-
-	return (0);
+	free(datash->_environ);
+	free(datash->pid);
 }
 
 /**
- * sig_handler - handles SIGINT
- * @sig: SIGINT
+ * set_data - Initialize data structure
+ *
+ * @datash: data structure
+ * @av: argument vector
+ * Return: no return
  */
-void sig_handler(int sig)
+void set_data(data_shell *datash, char **av)
 {
-	signal(sig, sig_handler);
-	write(STDOUT_FILENO, "\n", 2);
-	prompt();
+	unsigned int i;
+
+	datash->av = av;
+	datash->input = NULL;
+	datash->args = NULL;
+	datash->status = 0;
+	datash->counter = 1;
+
+	for (i = 0; environ[i]; i++)
+		;
+
+	datash->_environ = malloc(sizeof(char *) * (i + 1));
+
+	for (i = 0; environ[i]; i++)
+	{
+		datash->_environ[i] = _strdup(environ[i]);
+	}
+
+	datash->_environ[i] = NULL;
+	datash->pid = aux_itoa(getpid());
+}
+
+/**
+ * main - Entry point
+ *
+ * @ac: argument count
+ * @av: argument vector
+ *
+ * Return: 0 on success.
+ */
+int main(int ac, char **av)
+{
+	data_shell datash;
+	(void) ac;
+
+	signal(SIGINT, get_sigint);
+	set_data(&datash, av);
+	shell_loop(&datash);
+	free_data(&datash);
+	if (datash.status < 0)
+		return (255);
+	return (datash.status);
 }
